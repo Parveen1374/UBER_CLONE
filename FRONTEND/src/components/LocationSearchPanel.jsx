@@ -1,23 +1,28 @@
 import React from "react";
 
 const LocationSearchPanel = (props) => {
-  const { setPanelOpen, setVehiclePanel } = props;
-  const addresses = [
-    "24B Theradi Street, Near Temple, Tiruvannamalai, Tamil Nadu",
-    "24B Theradi Street, Near Temple, Tiruvannamalai, Tamil Nadu",
-    "24B Theradi Street, Near Temple, Tiruvannamalai, Tamil Nadu",
-    "24B Theradi Street, Near Temple, Tiruvannamalai, Tamil Nadu",
-    "24B Theradi Street, Near Temple, Tiruvannamalai, Tamil Nadu",
-  ];
+  const {
+    setPanelOpen,
+    setVehiclePanel,
+    suggestions,
+    activeField,
+    setPickup,
+    setDestination,
+  } = props;
+
+  const handleSuggestionClick = (suggestion) => {
+    if (activeField === "pickup") {
+      setPickup(suggestion);
+    } else {
+      setDestination(suggestion);
+    }
+  };
 
   return (
     <>
-      {addresses.map((each, index) => (
+      {suggestions.map((each, index) => (
         <div
-          onClick={() => {
-            setVehiclePanel(true);
-            setPanelOpen(false);
-          }}
+          onClick={() => handleSuggestionClick(each)}
           key={index}
           className="flex justify-start items-center gap-4 border-2 border-gray-50 p-3 rounded-xl active:border-black my-2"
         >

@@ -7,6 +7,8 @@ import gsap from "gsap";
 const CaptainRiding = () => {
   const [finishRidePanel, setFinishRidePanel] = useState(false);
   const finishRidePanelRef = useRef(null);
+  const location = useLocation();
+  const rideData = location.state?.ride;
 
   useGSAP(
     function () {
@@ -60,7 +62,10 @@ const CaptainRiding = () => {
         ref={finishRidePanelRef}
         className="fixed w-full z-[500] bottom-0 translate-y-full bg-white px-3 py-10 pt-12"
       >
-        <FinishRide setFinishRidePanel={setFinishRidePanel} />
+        <FinishRide
+          rideData={rideData}
+          setFinishRidePanel={setFinishRidePanel}
+        />
       </div>
     </div>
   );

@@ -23,6 +23,7 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
     min: 5,
+    select: false,
   },
   socketId: {
     type: String,

@@ -9,6 +9,26 @@ const userRoutes = require("./routes/user.route");
 const captainRoutes = require("./routes/captain.routes");
 const mapRoutes = require("./routes/map.routes");
 const rideRoutes = require("./routes/ride.routes");
+const captainModel = require("./models/captain.model");
+
+const update = async () => {
+  const captains = await captainModel.find({});
+  for (const captain of captains) {
+    if (
+      captain.location &&
+      captain.location.ltd !== undefined &&
+      captain.location.lng !== undefined
+    ) {
+      captain.location = {
+        type: "Point",
+        coordinates: [captain.location.lng, captain.location.ltd],
+      };
+      await captain.save();
+    }
+  }
+};
+
+update();
 
 connectToMongoDB();
 

@@ -7,27 +7,29 @@ const captainSchema = new mongoose.Schema({
     firstname: {
       type: String,
       required: true,
-      minLength: [3, "First name must be at least 3 characters long"],
+      minlength: [3, "Firstname must be at least 3 characters long"],
     },
     lastname: {
       type: String,
-      minLength: [3, "Last name must be at least 3 characters long"],
+      minlength: [3, "Lastname must be at least 3 characters long"],
     },
   },
   email: {
     type: String,
     required: true,
     unique: true,
-    min: 5,
+    lowercase: true,
+    match: [/^\S+@\S+\.\S+$/, "Please enter a valid email"],
   },
   password: {
     type: String,
     required: true,
-    min: 5,
+    select: false,
   },
   socketId: {
     type: String,
   },
+
   status: {
     type: String,
     enum: ["active", "inactive"],
@@ -53,7 +55,7 @@ const captainSchema = new mongoose.Schema({
     vehicleType: {
       type: String,
       required: true,
-      enum: ["car", "motorcycle", "auto"],
+      enum: ["car", "moto", "auto"],
     },
   },
 
@@ -82,6 +84,6 @@ captainSchema.statics.hashPassword = async function (password) {
   return await bcrypt.hash(password, 10);
 };
 
-const CaptainModel = mongoose.model("captain", captainSchema);
+const captainModel = mongoose.model("captain", captainSchema);
 
-module.exports = CaptainModel;
+module.exports = captainModel;
