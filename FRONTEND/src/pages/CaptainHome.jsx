@@ -8,6 +8,7 @@ import ConfirmRidePopUp from "../components/ConfirmRidePopUp";
 import { CaptainDataContext } from "../contexts/CaptainContext";
 import { SocketContext } from "../contexts/SocketContext";
 import axios from "axios";
+import LiveTracking from "../components/LiveTracking";
 
 const CaptainHome = () => {
   const [ridePopupPanel, setRidePopupPanel] = useState(false);
@@ -23,7 +24,7 @@ const CaptainHome = () => {
   useEffect(() => {
     socket.emit("join", {
       userType: "captain",
-      userId: captain._id,
+      userId: captain?._id,
     });
 
     const updateLocation = () => {
@@ -33,7 +34,7 @@ const CaptainHome = () => {
             const { latitude, longitude } = position.coords;
 
             socket.emit("update-location-captain", {
-              userId: captain._id,
+              userId: captain?._id,
               location: {
                 ltd: latitude,
                 lng: longitude,
@@ -108,7 +109,7 @@ const CaptainHome = () => {
 
   return (
     <div className="h-screen">
-      <div className="fixed p-6 top-0 flex items-center justify-between w-screen">
+      <div className="fixed top-6 left-0 right-0 z-10 p-6 top-0 flex items-center justify-between w-screen">
         <img
           className="w-16"
           src="https://upload.wikimedia.org/wikipedia/commons/c/cc/Uber_logo_2018.png"
@@ -121,12 +122,8 @@ const CaptainHome = () => {
           <i className="text-lg font-medium ri-logout-box-r-line"></i>
         </Link>
       </div>
-      <div className="h-3/5">
-        <img
-          className="h-full w-full object-cover"
-          src="https://miro.medium.com/v2/resize:fit:1400/0*gwMx05pqII5hbfmX.gif"
-          alt=""
-        />
+      <div className="h-3/5  ">
+        <LiveTracking />
       </div>
       <div className="h-2/5 p-6">
         <CaptainDetails />
