@@ -2,11 +2,7 @@ const mongoose = require("mongoose");
 
 function connectToMongoDB() {
   mongoose
-    .connect(process.env.MONGO_URL, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-      serverSelectionTimeoutMS: 10000,
-    })
+    .connect(process.env.MONGO_URL)
     .then(() => {
       console.log("Connected to MongoDB");
     })
